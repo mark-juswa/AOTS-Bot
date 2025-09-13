@@ -1,6 +1,6 @@
-discord.py==2.3.2
+py-cord==2.5.0
+flask
 pandas
 python-binance
-flask
 nest_asyncio
 pytz
