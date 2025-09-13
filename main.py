@@ -152,12 +152,19 @@ def run_web():
 Thread(target=run_web).start()
 
 def start():
-    try:
-        asyncio.run(bot.start(DISCORD_TOKEN))
-    except RuntimeError:
-        nest_asyncio.apply()
-        loop = asyncio.get_event_loop()
-        loop.create_task(bot.start(DISCORD_TOKEN))
+    # Apply nest_asyncio to allow asyncio to be re-entered
+    nest_asyncio.apply()
+
+    # Get the event loop
+    loop = asyncio.get_event_loop()
+
+    # Create a task for the bot
+    bot_task = loop.create_task(bot.start(DISCORD_TOKEN))
+
+    # Run both the Flask server and the bot concurrently
+    loop.run_until_complete(bot_task)
 
 if __name__ == "__main__":
+    Thread(target=run_web).start()
     start()
+
