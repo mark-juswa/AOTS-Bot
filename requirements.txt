@@ -1,0 +1,6 @@
+discord.py==2.3.2
+pandas
+python-binance
+flask
+nest_asyncio
+pytz
